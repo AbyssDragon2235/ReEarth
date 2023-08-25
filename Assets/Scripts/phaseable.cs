@@ -8,6 +8,12 @@ public class phaseable : MonoBehaviour
 {
     private bool fadeOut, fadeIn;
     public float fadeSpeed;
+    Renderer ren;
+
+    void Start()
+    {
+        ren = GetComponent<Renderer>();
+    }
     
     public void StartPhasing()
     {
@@ -26,20 +32,20 @@ public class phaseable : MonoBehaviour
 
     public IEnumerator FadeOutObject()
     {
-        while (this.GetComponent<Renderer>().material.color.a > 0.1)
+        while (ren.material.color.a > 0.1)
         {
-            Color objectColor = this.GetComponent<Renderer>().material.color;
+            Color objectColor = ren.material.color;
             float fadeAmount = objectColor.a - (fadeSpeed * Time.deltaTime);
 
             objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
-            this.GetComponent<Renderer>().material.color = objectColor;
+            ren.material.color = objectColor;
             yield return null;
         }
     }
 
     public IEnumerator FadeInObject()
     {
-        while (this.GetComponent<Renderer>().material.color.a < 1)
+        while (this.GetComponent<Renderer>().material.color.a < 255)
         {
             Color objectColor = this.GetComponent<Renderer>().material.color;
             float fadeAmount = objectColor.a + (fadeSpeed * Time.deltaTime);
